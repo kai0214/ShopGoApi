@@ -12,7 +12,7 @@ type GoodsController struct {
 	goodsLogic logic.GoodsLogic
 }
 
-//@router /addGoods [post]
+//@router /add [post]
 func (c *GoodsController) AddGoods() {
 	goods := new(logic.AddGoods)
 	goods.Name = c.GetString("name")
@@ -29,7 +29,6 @@ func (c *GoodsController) AddGoods() {
 			return
 		}
 	}
-
 	err := c.goodsLogic.Add(goods)
 	common.HttpResponse(c.Ctx, err)
 }
@@ -56,6 +55,6 @@ func (c *GoodsController) GetDetail() {
 //@router  /list  [get]
 func (c *GoodsController) GetPageList() {
 	page, _ := c.GetInt("page")
-	data, err := c.goodsLogic.FindByPage(page)
+	data, err := c.goodsLogic.FindAlOrPage(page)
 	common.HttpResponseList(c.Ctx, data, err)
 }

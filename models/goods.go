@@ -1,12 +1,18 @@
 package models
-import "github.com/astaxie/beego/orm"
+
+import (
+	"fmt"
+	"github.com/astaxie/beego/orm"
+)
 
 type (
 	Goods struct {
-		Id       int    `json:"id"       orm:"column(id);auto"`
-		Name     string `json:"name"       orm:"column(name)"`
-		Describe string `json:"describe"    orm:"column(describe)"`
-		Cover    string `json:"cover"       orm:"column(cover)"`
+		Id         int       `json:"id"       orm:"column(id);auto"`
+		Name       string    `json:"name"       orm:"column(g_name)"`
+		Describe   string    `json:"describe"    orm:"column(g_describe)"`
+		Cover      string    `json:"cover"       orm:"column(cover)"`
+		//CreateTime time.Time `json:"create_time" orm:"column(create_time)"`
+		//UpdateTime time.Time `json:"update_time" orm:"column(update_time)"`
 	}
 
 	GoodsModel struct {
@@ -19,7 +25,7 @@ func init() {
 }
 
 func (g *Goods) TableName() string {
-	return "`goods`"
+	return "goods"
 }
 
 /**
@@ -27,8 +33,15 @@ func (g *Goods) TableName() string {
 */
 func (m *GoodsModel) AddGoods(g *Goods) error {
 	if _, err := orm.NewOrm().Insert(g); err != nil {
+		fmt.Printf(err.Error())
 		return err
 	}
+
+	//fmt.Println("---tableName  ", m.TableName(), g.Name, g.Describe, g.Cover)
+	//_, err := orm.NewOrm().Raw("INSERT INTO "+m.TableName()+"(name,describe,cover) VALUES (?,?,?) ", g.Name, g.Describe, g.Cover).Exec()
+	//if err != nil {
+	//	return err
+	//}
 	return nil
 }
 
@@ -54,6 +67,13 @@ func (m *GoodsModel) FindById(id int) (*Goods, error) {
 	return c, nil
 }
 
+func (m *GoodsModel) FindAlOrPage(page int) ([]*Goods, error) {
+	if page > 0 {
+		return m.FindByPage(page)
+	}
+	return m.FindAll()
+}
+
 /**
 分页获取商品
 */
@@ -61,6 +81,21 @@ func (m *GoodsModel) FindByPage(page int) ([]*Goods, error) {
 	cs := make([]*Goods, 0)
 	if _, err := orm.NewOrm().
 		Raw("SELECT * FROM "+m.TableName()+"  ORDER BY create_time DESC LIMIT ?,2", page-1).
+		QueryRows(&cs);
+		nil != err {
+		return nil, err
+	}
+	return cs, nil
+}
+
+/**
+获取全部
+*/
+
+func (m *GoodsModel) FindAll() ([]*Goods, error) {
+	cs := make([]*Goods, 0)
+	if _, err := orm.NewOrm().
+		Raw("SELECT * FROM " + m.TableName() + "  ORDER BY create_time DESC").
 		QueryRows(&cs);
 		nil != err {
 		return nil, err

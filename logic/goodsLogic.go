@@ -1,6 +1,8 @@
 package logic
 
-import "ShopGoApi/models"
+import (
+	"ShopGoApi/models"
+)
 
 type (
 	GoodsLogic struct {
@@ -8,17 +10,19 @@ type (
 	}
 
 	AddGoods struct {
-		Id       int    `json:"id"      `
-		Name     string `json:"name"      `
-		Describe string `json:"describe"    `
-		Cover    string `json:"cover"  `
+		Id         int       `json:"id"       orm:"column(id);auto"`
+		Name       string    `json:"name"       orm:"column(name)"`
+		Describe   string    `json:"describe"    orm:"column(describe)"`
+		Cover      string    `json:"cover"       orm:"column(cover)"`
+		//CreateTime time.Time `json:"create_time" orm:"column(create_time)"`
+		//UpdateTime time.Time `json:"update_time" orm:"column(update_time)"`
 	}
 
 	GoodsDetail struct {
-		Id       int    `json:"id"      `
-		Name     string `json:"name"      `
-		Describe string `json:"describe"    `
-		Cover    string `json:"cover"  `
+		Id       int    `json:"id"`
+		Name     string `json:"name"`
+		Describe string `json:"describe"`
+		Cover    string `json:"cover"`
 	}
 
 	GoodsList []*GoodsItem
@@ -33,9 +37,11 @@ type (
 //添加
 func (l *GoodsLogic) Add(goods *AddGoods) error {
 	if err := l.goodsModel.AddGoods(&models.Goods{
-		Name:     goods.Name,
-		Describe: goods.Describe,
-		Cover:    goods.Cover,
+		Name:       goods.Name,
+		Describe:   goods.Describe,
+		Cover:      goods.Cover,
+		//CreateTime: goods.CreateTime,
+		//UpdateTime: goods.CreateTime,
 	}); err != nil {
 		return err
 	}
@@ -57,8 +63,8 @@ func (l *GoodsLogic) FindById(id int) (*GoodsDetail, error) {
 
 }
 
-func (l *GoodsLogic) FindByPage(page int) (*GoodsList, error) {
-	date, err := l.goodsModel.FindByPage(page)
+func (l *GoodsLogic) FindAlOrPage(page int) (*GoodsList, error) {
+	date, err := l.goodsModel.FindAlOrPage(page)
 	if err != nil {
 		return nil, err
 	}
@@ -73,3 +79,4 @@ func (l *GoodsLogic) FindByPage(page int) (*GoodsList, error) {
 	}
 	return &resp, nil
 }
+

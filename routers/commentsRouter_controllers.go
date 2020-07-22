@@ -7,10 +7,28 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["ShopGoApi/controllers:AccountController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:AccountController"],
+        beego.ControllerComments{
+            Method: "Login",
+            Router: "/login",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:AccountController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:AccountController"],
+        beego.ControllerComments{
+            Method: "Register",
+            Router: "/register",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"],
         beego.ControllerComments{
             Method: "AddGoods",
-            Router: "/addGoods",
+            Router: "/add",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
