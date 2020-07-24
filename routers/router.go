@@ -9,7 +9,6 @@ package routers
 
 import (
 	"ShopGoApi/controllers"
-
 	"github.com/astaxie/beego"
 )
 
@@ -33,6 +32,11 @@ func init() {
 		beego.NSNamespace("/account",
 			beego.NSInclude(
 				&controllers.AccountController{},
+			),
+		),
+		beego.NSNamespace("/file",
+			beego.NSInclude(
+				&controllers.FileController{},
 			),
 		),
 	)

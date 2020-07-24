@@ -25,6 +25,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ShopGoApi/controllers:FileController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:FileController"],
+        beego.ControllerComments{
+            Method: "Post",
+            Router: "/",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"],
         beego.ControllerComments{
             Method: "AddGoods",
