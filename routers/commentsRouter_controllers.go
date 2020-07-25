@@ -25,6 +25,33 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
+        beego.ControllerComments{
+            Method: "Get",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
+        beego.ControllerComments{
+            Method: "Post",
+            Router: "/add",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
+        beego.ControllerComments{
+            Method: "PostSub",
+            Router: "/addSub",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ShopGoApi/controllers:FileController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:FileController"],
         beego.ControllerComments{
             Method: "Post",

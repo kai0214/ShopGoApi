@@ -10,10 +10,10 @@ type (
 	}
 
 	AddGoods struct {
-		Id         int       `json:"id"       orm:"column(id);auto"`
-		Name       string    `json:"name"       orm:"column(name)"`
-		Describe   string    `json:"describe"    orm:"column(describe)"`
-		Cover      string    `json:"cover"       orm:"column(cover)"`
+		Id       int    `json:"id"       orm:"column(id);auto"`
+		Name     string `json:"name"       orm:"column(name)"`
+		Describe string `json:"describe"    orm:"column(describe)"`
+		Cover    string `json:"cover"       orm:"column(cover)"`
 		//CreateTime time.Time `json:"create_time" orm:"column(create_time)"`
 		//UpdateTime time.Time `json:"update_time" orm:"column(update_time)"`
 	}
@@ -27,19 +27,23 @@ type (
 
 	GoodsList []*GoodsItem
 	GoodsItem struct {
-		Id       int    `json:"id"      `
-		Name     string `json:"name"      `
-		Describe string `json:"describe"    `
-		Cover    string `json:"cover"  `
+		Id           int    `json:"id"      `
+		Name         string `json:"name"      `
+		Describe     string `json:"describe"    `
+		Cover        string `json:"cover"  `
+		PresentPrice string `json:"present_price"`
+		OriginalPrice string `json:"original_price"`
+
+
 	}
 )
 
 //添加
 func (l *GoodsLogic) Add(goods *AddGoods) error {
 	if err := l.goodsModel.AddGoods(&models.Goods{
-		Name:       goods.Name,
-		Describe:   goods.Describe,
-		Cover:      goods.Cover,
+		Name:     goods.Name,
+		Describe: goods.Describe,
+		Cover:    goods.Cover,
 		//CreateTime: goods.CreateTime,
 		//UpdateTime: goods.CreateTime,
 	}); err != nil {
@@ -75,8 +79,10 @@ func (l *GoodsLogic) FindAlOrPage(page int) (*GoodsList, error) {
 			Name:     d.Name,
 			Describe: d.Describe,
 			Cover:    d.Cover,
+			OriginalPrice:d.OriginalPrice,
+			PresentPrice:d.PresentPrice,
 		})
 	}
+
 	return &resp, nil
 }
-

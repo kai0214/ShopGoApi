@@ -7,10 +7,12 @@ import (
 
 type (
 	Goods struct {
-		Id         int       `json:"id"       orm:"column(id);auto"`
-		Name       string    `json:"name"       orm:"column(g_name)"`
-		Describe   string    `json:"describe"    orm:"column(g_describe)"`
-		Cover      string    `json:"cover"       orm:"column(cover)"`
+		Id            int    `json:"id"       orm:"column(id);auto"`
+		Name          string `json:"name"       orm:"column(g_name)"`
+		Describe      string `json:"describe"    orm:"column(g_describe)"`
+		Cover         string `json:"cover"       orm:"column(cover)"`
+		PresentPrice  string `json:"present_price" orm:"column(present_price)"`
+		OriginalPrice string `json:"original_price" orm:"column(original_price)"`
 		//CreateTime time.Time `json:"create_time" orm:"column(create_time)"`
 		//UpdateTime time.Time `json:"update_time" orm:"column(update_time)"`
 	}
@@ -69,7 +71,7 @@ func (m *GoodsModel) FindById(id int) (*Goods, error) {
 
 func (m *GoodsModel) FindAlOrPage(page int) ([]*Goods, error) {
 	if page > 0 {
-		return m.FindByPage(page)
+		return m.FindByPage(page - 1)
 	}
 	return m.FindAll()
 }
@@ -80,7 +82,7 @@ func (m *GoodsModel) FindAlOrPage(page int) ([]*Goods, error) {
 func (m *GoodsModel) FindByPage(page int) ([]*Goods, error) {
 	cs := make([]*Goods, 0)
 	if _, err := orm.NewOrm().
-		Raw("SELECT * FROM "+m.TableName()+"  ORDER BY create_time DESC LIMIT ?,2", page-1).
+		Raw("SELECT * FROM "+m.TableName()+"  ORDER BY create_time DESC LIMIT ?,?", page*10, (page+1)*10).
 		QueryRows(&cs);
 		nil != err {
 		return nil, err

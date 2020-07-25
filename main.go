@@ -3,10 +3,9 @@ package main
 import (
 	_ "ShopGoApi/routers"
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
-
-	"github.com/astaxie/beego"
 )
 func init() {
 	//设置数据库类型
@@ -20,6 +19,7 @@ func init() {
 	}
 }
 func main() {
+
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"

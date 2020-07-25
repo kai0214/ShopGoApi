@@ -39,6 +39,12 @@ func init() {
 				&controllers.FileController{},
 			),
 		),
+		beego.NSNamespace("/category",
+			beego.NSInclude(
+				&controllers.CategoryController{},
+			),
+		),
+
 	)
 	beego.AddNamespace(ns)
 }

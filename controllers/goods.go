@@ -55,6 +55,7 @@ func (c *GoodsController) GetDetail() {
 //@router  /list  [get]
 func (c *GoodsController) GetPageList() {
 	page, _ := c.GetInt("page")
+	fmt.Println(page)
 	data, err := c.goodsLogic.FindAlOrPage(page)
 	common.HttpResponseList(c.Ctx, data, err)
 }
