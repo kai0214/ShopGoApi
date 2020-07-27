@@ -12,10 +12,11 @@ type (
 	}
 )
 
-//@router /   [get]
+//@router /list   [get]
 func (c *CategoryController) Get() {
 	data, err := c.categoryLogic.FindAll()
 	common.HttpResponseData(c.Ctx, data, err)
+
 }
 
 //@router /add [post]

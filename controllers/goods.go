@@ -18,17 +18,11 @@ func (c *GoodsController) AddGoods() {
 	goods.Name = c.GetString("name")
 	goods.Describe = c.GetString("describe")
 	goods.Cover = c.GetString("cover")
-	valid := new(validation.Validation)
-	valid.Required(goods.Name, "name").Message("商品名称不能为空")
-	valid.Required(goods.Describe, "describe").Message("商品描述不能为空")
-	valid.Required(goods.Cover, "cover").Message("商品封面不能为空")
-	if valid.HasErrors() {
-		for _, e := range valid.Errors {
-			common.HttpResponse(c.Ctx,
-				common.NewBaseError(common.ErrFromValid, e.Message))
-			return
-		}
-	}
+	goods.Category, _ = c.GetInt("category")
+	goods.SubCategory, _ = c.GetInt("sub_category")
+	goods.PresentPrice, _ = c.GetFloat("present_price")
+	goods.OriginalPrice, _ = c.GetFloat("original_price")
+
 	err := c.goodsLogic.Add(goods)
 	common.HttpResponse(c.Ctx, err)
 }
@@ -49,7 +43,6 @@ func (c *GoodsController) GetDetail() {
 	data, err := c.goodsLogic.FindById(id)
 	common.HttpResponseData(c.Ctx, data, err)
 
-
 }
 
 //@router  /list  [get]
@@ -57,5 +50,16 @@ func (c *GoodsController) GetPageList() {
 	page, _ := c.GetInt("page")
 	fmt.Println(page)
 	data, err := c.goodsLogic.FindAlOrPage(page)
+	common.HttpResponseList(c.Ctx, data, err)
+}
+
+//@router  /categoryGoodsList  [get]
+func (c *GoodsController) GetCategoryGoodsList() {
+	page, _ := c.GetInt("page")
+	category, _ := c.GetInt("category")
+	subCategory, _ := c.GetInt("subCategory")
+
+	fmt.Println(page)
+	data, err := c.goodsLogic.FindCategoryAlOrPage(category, subCategory, page)
 	common.HttpResponseList(c.Ctx, data, err)
 }

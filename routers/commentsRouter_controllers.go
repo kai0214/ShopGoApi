@@ -27,15 +27,6 @@ func init() {
 
     beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
         beego.ControllerComments{
-            Method: "Get",
-            Router: "/",
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
-        beego.ControllerComments{
             Method: "Post",
             Router: "/add",
             AllowHTTPMethods: []string{"post"},
@@ -48,6 +39,15 @@ func init() {
             Method: "PostSub",
             Router: "/addSub",
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
+        beego.ControllerComments{
+            Method: "Get",
+            Router: "/list",
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -66,6 +66,15 @@ func init() {
             Method: "AddGoods",
             Router: "/add",
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:GoodsController"],
+        beego.ControllerComments{
+            Method: "GetCategoryGoodsList",
+            Router: "/categoryGoodsList",
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
