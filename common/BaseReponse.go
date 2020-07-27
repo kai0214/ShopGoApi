@@ -11,7 +11,7 @@ type (
 		Count int         `json:"count,omitempty"`
 		Msg   string      `json:"msg"`
 		Data  interface{} `json:"data,omitempty"`
-		List  interface{} `json:"list,omitempty" `
+		List  interface{} `json:"datas,omitempty" `
 	}
 )
 

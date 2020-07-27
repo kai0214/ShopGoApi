@@ -57,8 +57,7 @@ func (c *GoodsController) GetPageList() {
 func (c *GoodsController) GetCategoryGoodsList() {
 	page, _ := c.GetInt("page")
 	category, _ := c.GetInt("category")
-	subCategory, _ := c.GetInt("subCategory")
-
+	subCategory, _ := c.GetInt("sub_category")
 	fmt.Println(page)
 	data, err := c.goodsLogic.FindCategoryAlOrPage(category, subCategory, page)
 	common.HttpResponseList(c.Ctx, data, err)

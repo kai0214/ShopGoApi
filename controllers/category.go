@@ -15,7 +15,7 @@ type (
 //@router /list   [get]
 func (c *CategoryController) Get() {
 	data, err := c.categoryLogic.FindAll()
-	common.HttpResponseData(c.Ctx, data, err)
+	common.HttpResponseList(c.Ctx, data, err)
 
 }
 
