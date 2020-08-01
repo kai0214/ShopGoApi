@@ -19,6 +19,7 @@ func (c *GoodsController) AddGoods() {
 	goods.Describe = c.GetString("describe")
 	goods.Cover = c.GetString("cover")
 	goods.Category, _ = c.GetInt("category")
+	goods.Num, _ = c.GetInt("num")
 	goods.SubCategory, _ = c.GetInt("sub_category")
 	goods.PresentPrice, _ = c.GetFloat("present_price")
 	goods.OriginalPrice, _ = c.GetFloat("original_price")
@@ -41,6 +42,7 @@ func (c *GoodsController) GetDetail() {
 		}
 	}
 	data, err := c.goodsLogic.FindById(id)
+	fmt.Print(data)
 	common.HttpResponseData(c.Ctx, data, err)
 
 }
@@ -48,7 +50,6 @@ func (c *GoodsController) GetDetail() {
 //@router  /list  [get]
 func (c *GoodsController) GetPageList() {
 	page, _ := c.GetInt("page")
-	fmt.Println(page)
 	data, err := c.goodsLogic.FindAlOrPage(page)
 	common.HttpResponseList(c.Ctx, data, err)
 }
@@ -58,7 +59,6 @@ func (c *GoodsController) GetCategoryGoodsList() {
 	page, _ := c.GetInt("page")
 	category, _ := c.GetInt("category")
 	subCategory, _ := c.GetInt("sub_category")
-	fmt.Println(page)
 	data, err := c.goodsLogic.FindCategoryAlOrPage(category, subCategory, page)
 	common.HttpResponseList(c.Ctx, data, err)
 }

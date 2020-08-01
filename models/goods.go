@@ -7,14 +7,15 @@ import (
 
 type (
 	Goods struct {
-		Id            int    `json:"id"       orm:"column(id);auto"`
-		Name          string `json:"name"       orm:"column(g_name)"`
-		Describe      string `json:"describe"    orm:"column(g_describe)"`
-		Cover         string `json:"cover"       orm:"column(cover)"`
+		Id       int    `json:"id"       orm:"column(id);auto"`
+		Name     string `json:"name"       orm:"column(g_name)"`
+		Describe string `json:"describe"    orm:"column(g_describe)"`
+		Cover    string `json:"cover"       orm:"column(cover)"`
+		Num      int    `json:"goodsNum" orm:"column(num)"`
 		PresentPrice  float64 `json:"present_price" orm:"column(present_price)"`
 		OriginalPrice float64 `json:"original_price" orm:"column(original_price)"`
-		Category      int    `json:"category" orm:"column(category)"`
-		SubCategory   int    `json:"subCategory" orm:"column(sub_category)"`
+		Category      int     `json:"category" orm:"column(category)"`
+		SubCategory   int     `json:"subCategory" orm:"column(sub_category)"`
 		//CreateTime time.Time `json:"create_time" orm:"column(create_time)"`
 		//UpdateTime time.Time `json:"update_time" orm:"column(update_time)"`
 	}

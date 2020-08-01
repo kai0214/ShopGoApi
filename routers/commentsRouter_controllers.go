@@ -25,6 +25,24 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CartController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CartController"],
+        beego.ControllerComments{
+            Method: "PostAdd",
+            Router: "/add",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["ShopGoApi/controllers:CartController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CartController"],
+        beego.ControllerComments{
+            Method: "Get",
+            Router: "/all",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"] = append(beego.GlobalControllerRouter["ShopGoApi/controllers:CategoryController"],
         beego.ControllerComments{
             Method: "Post",
