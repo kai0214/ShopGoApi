@@ -8,6 +8,7 @@ import (
 type (
 	GoodsLogic struct {
 		goodsModel models.GoodsModel
+		cartModel  models.CartModel
 	}
 
 	AddGoods struct {
@@ -34,6 +35,7 @@ type (
 		PresentPrice  float64  `json:"present_price" orm:"column(present_price)"`
 		OriginalPrice float64  `json:"original_price" orm:"column(original_price)"`
 		Images        []string `json:"images"`
+		CartNum       int      `json:"cart_num"`
 	}
 
 	GoodsList []*GoodsItem
@@ -91,7 +93,7 @@ func (l *GoodsLogic) Add(goods *AddGoods) error {
 }
 
 //通过ID查找
-func (l *GoodsLogic) FindById(id int) (*GoodsDetail, error) {
+func (l *GoodsLogic) FindById(u_id, id int) (*GoodsDetail, error) {
 	m, err := l.goodsModel.FindById(id)
 	imgs := []string{"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596108392729&di=d54b9acd996780253028ebba3ed64d9d&imgtype=0&src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2F201604%2F23%2F002205xqdkj84gnw4oi85v.jpg",
 		"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596108419697&di=5e3091ccb832c3a3951009558aac64a2&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1305%2F03%2Fc0%2F20496484_1367549048818.jpg",
@@ -101,11 +103,19 @@ func (l *GoodsLogic) FindById(id int) (*GoodsDetail, error) {
 	if err != nil {
 		return nil, err
 	}
+	cart, err := l.cartModel.FindUserAndGoods(u_id, id)
+	var num = 0
+	if err != nil {
+		num = 0
+	} else {
+		num = cart.GNum
+	}
 	return &GoodsDetail{
 		Id:            m.Id,
 		Name:          m.Name,
 		Describe:      m.Describe,
 		Cover:         m.Cover,
+		CartNum:       num,
 		OriginalPrice: common.Decimal(m.OriginalPrice),
 		PresentPrice:  common.Decimal(m.PresentPrice),
 		Category:      m.Category,
@@ -113,6 +123,15 @@ func (l *GoodsLogic) FindById(id int) (*GoodsDetail, error) {
 		Images:        imgs,
 	}, nil
 
+}
+
+func (l *GoodsLogic) FindUserAndId(u_id, id int) (int, error) {
+	cart, err := l.cartModel.FindUserAndGoods(u_id, id)
+	if err != nil {
+		return 0, nil
+	}
+
+	return cart.GNum, err
 }
 
 func (l *GoodsLogic) FindAlOrPage(page int) (*GoodsList, error) {

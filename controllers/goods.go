@@ -31,6 +31,7 @@ func (c *GoodsController) AddGoods() {
 //@router /detail  [get]
 func (c *GoodsController) GetDetail() {
 	id, _ := c.GetInt("id")
+	u_id, _ := c.GetInt("u_id")
 	fmt.Print("----Id:", id)
 	valid := new(validation.Validation)
 	valid.Required(id, "id").Message("Id异常")
@@ -41,7 +42,7 @@ func (c *GoodsController) GetDetail() {
 			return
 		}
 	}
-	data, err := c.goodsLogic.FindById(id)
+	data, err := c.goodsLogic.FindById(u_id, id)
 	fmt.Print(data)
 	common.HttpResponseData(c.Ctx, data, err)
 
